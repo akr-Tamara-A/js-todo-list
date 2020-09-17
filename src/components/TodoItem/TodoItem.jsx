@@ -4,6 +4,9 @@ import Button from "../Button/Button";
 
 
 export default function TodoItem(props) {
+  function handleTodoEdit() {
+    props.handleTodoEdit(props.text, props.id);
+  }
 
 
   return (
@@ -11,6 +14,7 @@ export default function TodoItem(props) {
       <p className="todo__text">{props.text}</p>
       <Button
         className="todo__btn todo__btn_type_edit"
+        onClick={handleTodoEdit}
       >
         <svg
           width="24"
