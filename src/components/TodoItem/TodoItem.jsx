@@ -2,8 +2,9 @@ import React from "react";
 import "./TodoItem.css";
 import Button from "../Button/Button";
 
-
 export default function TodoItem(props) {
+  const [isChecked, setIsChecked] = React.useState(props.isChecked);
+
   function handleTodoEdit() {
     props.handleTodoEdit(props.text, props.id);
   }
@@ -16,12 +17,30 @@ export default function TodoItem(props) {
     props.handleTodoDelete(props.id);
   }
 
+  function handleCheckbox() {
+    setIsChecked(!isChecked);
+    props.handleCheckbox(!isChecked, props.id, props.text);
+  }
+
   return (
     <li className="todo" id={props.id}>
-      <p className="todo__text">{props.text}</p>
+      <input
+        type="checkbox"
+        onChange={handleCheckbox}
+        checked={isChecked}
+        className="todos__checkbox"
+      />
+      <p
+        className={`todo__text ${
+          props.isChecked ? "todo__text_type_checked" : null
+        }`}
+      >
+        {props.text}
+      </p>
       <Button
         className="todo__btn todo__btn_type_edit"
         onClick={handleTodoEdit}
+        disabled={isChecked}
       >
         <svg
           width="24"
@@ -64,6 +83,7 @@ export default function TodoItem(props) {
       <Button
         className="todo__btn todo__btn_type_delete"
         onClick={handleTodoDelete}
+        disabled={isChecked}
       >
         <svg
           width="18"

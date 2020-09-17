@@ -35,3 +35,8 @@
 .button:hover {
   opacity: .7;
 }
+
+.button:disabled {
+  opacity: .7;
+  cursor: default;
+}

@@ -6,7 +6,6 @@ import Button from "../Button/Button";
 import TodoList from "../TodoList/TodoList";
 import TodoItem from "../TodoItem/TodoItem";
 import {todos as todosList} from "../../utils/todos";
-import { useEffect } from "react";
 
 /** Компонет "Секция" */
 export default function Section() {
@@ -28,7 +27,7 @@ export default function Section() {
   /** Обработка сабмита формы */
   function handleFormSubmit(event) {
     if (buttonValue === 'Добавить') {
-      setTodos([{id: Date.now(), text: inputValue}, ...todos]);
+      setTodos([{id: Date.now(), text: inputValue, isChecked: false}, ...todos]);
       clearForm();
       event.preventDefault();
     } else if (buttonValue === 'Сохранить') {
@@ -37,7 +36,7 @@ export default function Section() {
         if (todo.id !== selectedTodoId) {
           newTodos.push(todo);
         } else {
-          newTodos.push({id: selectedTodoId, text: inputValue});
+          newTodos.push({id: selectedTodoId, text: inputValue, isChecked: false});
         }
       };
       setTodos(newTodos);
@@ -62,7 +61,7 @@ export default function Section() {
   /** Обработка копирования todo */
   function handleTodoDublicate(text) {
     clearForm();
-    setTodos([{id: Date.now(), text: text}, ...todos]);
+    setTodos([{id: Date.now(), text: text, isChecked: false}, ...todos]);
   }
   
   /** Обработка удаления todo */
@@ -76,6 +75,19 @@ export default function Section() {
     };
     setTodos(newTodos);
   };
+
+  function handleCheckbox(booleen, id, text) {
+    console.log(id + ' ' + booleen);
+    let newTodos = [];
+    for (let todo of todos) {
+      if (todo.id !== id) {
+        newTodos.push(todo);
+      } else {
+        newTodos.push({id: id, text: text, isChecked: booleen});
+      }
+    };
+    setTodos(newTodos);
+  }
   
   /** Отрисовка компонента */
   return (
@@ -96,6 +108,8 @@ export default function Section() {
               index={index}
               text={todo.text} 
               id={todo.id} 
+              isChecked={todo.isChecked}
+              handleCheckbox={handleCheckbox}
               handleTodoEdit={handleTodoEdit}
               handleTodoDublicate={handleTodoDublicate}
               handleTodoDelete={handleTodoDelete} />
