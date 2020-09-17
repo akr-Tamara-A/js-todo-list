@@ -8,6 +8,8 @@ export default function Input(props) {
       name="todo"
       className="todos__input"
       placeholder={props.placeholder}
+      onChange={props.onChange}
+      value={props.value}
     />
   );
 }
