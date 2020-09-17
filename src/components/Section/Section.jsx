@@ -59,6 +59,13 @@ export default function Section() {
     setButtonValue('Сохранить');
   }
 
+  /** Обработка копирования todo */
+  function handleTodoDublicate(text) {
+    clearForm();
+    setTodos([{id: Date.now(), text: text}, ...todos]);
+  }
+  
+
   
   /** Отрисовка компонента */
   return (
@@ -79,7 +86,8 @@ export default function Section() {
               index={index}
               text={todo.text} 
               id={todo.id} 
-              handleTodoEdit={handleTodoEdit}/>
+              handleTodoEdit={handleTodoEdit}
+              handleTodoDublicate={handleTodoDublicate}/>
           );
         })}
       </TodoList>

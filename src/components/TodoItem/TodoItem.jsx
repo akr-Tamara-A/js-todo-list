@@ -8,6 +8,9 @@ export default function TodoItem(props) {
     props.handleTodoEdit(props.text, props.id);
   }
 
+  function handleTodoDublicate() {
+    props.handleTodoDublicate(props.text);
+  }
 
   return (
     <li className="todo" id={props.id}>
@@ -35,6 +38,7 @@ export default function TodoItem(props) {
       </Button>
       <Button
         className="todo__btn todo__btn_type_duplicate"
+        onClick={handleTodoDublicate}
       >
         <svg
           width="25"
