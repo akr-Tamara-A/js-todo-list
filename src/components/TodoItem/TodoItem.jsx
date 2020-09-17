@@ -24,12 +24,15 @@ export default function TodoItem(props) {
 
   return (
     <li className="todo" id={props.id}>
-      <input
-        type="checkbox"
-        onChange={handleCheckbox}
-        checked={isChecked}
-        className="todos__checkbox"
-      />
+      <label className="todos__label">
+        <input
+          type="checkbox"
+          onChange={handleCheckbox}
+          checked={isChecked}
+          className="todos__checkbox"
+        />
+        <span className="todos__styledCheckbox" />
+      </label>
       <p
         className={`todo__text ${
           props.isChecked ? "todo__text_type_checked" : null
