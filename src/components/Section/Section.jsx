@@ -65,7 +65,17 @@ export default function Section() {
     setTodos([{id: Date.now(), text: text}, ...todos]);
   }
   
-
+  /** Обработка удаления todo */
+  function handleTodoDelete(id) {
+    clearForm();
+    let newTodos = [];
+    for (let todo of todos) {
+      if(todo.id !== id) {
+        newTodos.push(todo);
+      };
+    };
+    setTodos(newTodos);
+  };
   
   /** Отрисовка компонента */
   return (
@@ -87,7 +97,8 @@ export default function Section() {
               text={todo.text} 
               id={todo.id} 
               handleTodoEdit={handleTodoEdit}
-              handleTodoDublicate={handleTodoDublicate}/>
+              handleTodoDublicate={handleTodoDublicate}
+              handleTodoDelete={handleTodoDelete} />
           );
         })}
       </TodoList>

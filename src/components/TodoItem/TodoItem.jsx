@@ -12,6 +12,10 @@ export default function TodoItem(props) {
     props.handleTodoDublicate(props.text);
   }
 
+  function handleTodoDelete() {
+    props.handleTodoDelete(props.id);
+  }
+
   return (
     <li className="todo" id={props.id}>
       <p className="todo__text">{props.text}</p>
@@ -59,6 +63,7 @@ export default function TodoItem(props) {
       </Button>
       <Button
         className="todo__btn todo__btn_type_delete"
+        onClick={handleTodoDelete}
       >
         <svg
           width="18"
