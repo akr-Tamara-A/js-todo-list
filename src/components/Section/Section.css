@@ -1,3 +1,19 @@
 .todos {
   flex-grow: 1;
 }
+
+.todos__form {
+  margin-bottom: 30px;
+  display: flex;
+}
+
+.todos__fieldset {
+  display: flex;
+  border: none;
+}
+
+.todos__legend {
+  font-size: 18px;
+  text-decoration: underline;
+  margin-right: 30px;
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import "./TodoItem.css";
 import Button from "../Button/Button";
+import Checkbox from "../Checkbox/Checkbox.jsx";
 
 export default function TodoItem(props) {
   const [isChecked, setIsChecked] = React.useState(props.isChecked);
@@ -24,15 +25,7 @@ export default function TodoItem(props) {
 
   return (
     <li className="todo" id={props.id}>
-      <label className="todos__label">
-        <input
-          type="checkbox"
-          onChange={handleCheckbox}
-          checked={isChecked}
-          className="todos__checkbox"
-        />
-        <span className="todos__styledCheckbox" />
-      </label>
+      <Checkbox onChange={handleCheckbox} checked={isChecked} hasLabel={false} type="forTodo"/>
       <p
         className={`todo__text ${
           props.isChecked ? "todo__text_type_checked" : null

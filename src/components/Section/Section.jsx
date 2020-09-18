@@ -1,23 +1,26 @@
 import React from "react";
 import "./Section.css";
-import Form from "../Form/Form";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 import TodoList from "../TodoList/TodoList";
 import TodoItem from "../TodoItem/TodoItem";
+import Checkbox from "../Checkbox/Checkbox.jsx";
 import {todos as todosList} from "../../utils/todos";
 
 /** Компонет "Секция" */
 export default function Section() {
   const [todos, setTodos] = React.useState(todosList);
+  const [todosForRender, setTodosForRender] = React.useState(todos);
   const [inputValue, setInputValue] = React.useState('');
   const [buttonValue, setButtonValue] = React.useState('Добавить');
   const [selectedTodoId, setSelectedTodoId] = React.useState('');
+  const [checkDoneTodos, setCheckDoneTodos] = React.useState(true);
+  const [checkNotDoneTodos, setCheckNotDoneTodos] = React.useState(true);
 
   /** Проверка перерендеринга */
   React.useEffect(() => {
-    console.log(todos);
-  }, [todos]);
+    filterTodos();
+  }, [todos, checkDoneTodos, checkNotDoneTodos]);
 
   /** Получение значение инпута */
   function handleInputChange(event) {
@@ -60,8 +63,9 @@ export default function Section() {
 
   /** Обработка копирования todo */
   function handleTodoDublicate(text) {
-    clearForm();
     setTodos([{id: Date.now(), text: text, isChecked: false}, ...todos]);
+    clearForm();
+    setCheckNotDoneTodos(true);
   }
   
   /** Обработка удаления todo */
@@ -76,8 +80,8 @@ export default function Section() {
     setTodos(newTodos);
   };
 
+  /**  */
   function handleCheckbox(booleen, id, text) {
-    console.log(id + ' ' + booleen);
     let newTodos = [];
     for (let todo of todos) {
       if (todo.id !== id) {
@@ -87,32 +91,79 @@ export default function Section() {
       }
     };
     setTodos(newTodos);
+  };
+
+  /** Обработка чека выполненных todo */
+  function handleCheckDoneTodos() {
+    setCheckDoneTodos(!checkDoneTodos);
   }
   
+  /** Обработка чека невыполненных todo */
+  function handleCheckNotDoneTodos() {
+    setCheckNotDoneTodos(!checkNotDoneTodos);
+  }
+
+  /** Фильтрация списка todo в зависимости от выбранных чекбоксов */
+  function filterTodos() {
+    console.log(checkDoneTodos + ' ' + checkNotDoneTodos);
+    let newTodos = [];
+    if (checkDoneTodos && checkNotDoneTodos) {
+      for (let todo of todos) {
+        newTodos.push(todo);
+      };
+    } else if (checkDoneTodos && !checkNotDoneTodos) {
+      for (let todo of todos) {
+        if (todo.isChecked) {
+          newTodos.push(todo);
+        };
+      };
+    } else if (!checkDoneTodos && checkNotDoneTodos) {
+      for (let todo of todos) {
+        if (!todo.isChecked) {
+          newTodos.push(todo);
+        };
+      };
+    }
+    setTodosForRender(newTodos);
+  }
+
+
   /** Отрисовка компонента */
   return (
     <section className="todos">
-      <Form onSubmit={handleFormSubmit}>
+      <form className="todos__form">
+        <div className="todos__fieldset">
+        <span className="todos__legend">Вывести на экран:</span>
+          <Checkbox onChange={handleCheckDoneTodos} checked={checkDoneTodos} label="Выполненные" style="forFilter" />
+          <Checkbox onChange={handleCheckNotDoneTodos} checked={checkNotDoneTodos} label="Не выполненные" style="forFilter" />
+        </div>
+      </form>
+      <form
+        name="todo-form"
+        className="todos__form"
+        onSubmit={handleFormSubmit}
+      >
         <Input
           placeholder="Следующее дело..."
           onChange={handleInputChange}
           value={inputValue}
         />
         <Button className="todos__submit-btn" text={buttonValue} />
-      </Form>
+      </form>
       <TodoList>
-        {todos.map((todo, index) => {
+        {
+        todosForRender.map((todo) => {
           return (
-            <TodoItem 
-              key={todo.id} 
-              index={index}
-              text={todo.text} 
-              id={todo.id} 
+            <TodoItem
+              key={todo.id}
+              text={todo.text}
+              id={todo.id}
               isChecked={todo.isChecked}
               handleCheckbox={handleCheckbox}
               handleTodoEdit={handleTodoEdit}
               handleTodoDublicate={handleTodoDublicate}
-              handleTodoDelete={handleTodoDelete} />
+              handleTodoDelete={handleTodoDelete}
+            />
           );
         })}
       </TodoList>
