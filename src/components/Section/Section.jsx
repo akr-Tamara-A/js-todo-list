@@ -134,8 +134,8 @@ export default function Section() {
       <form className="todos__form">
         <div className="todos__fieldset">
         <span className="todos__legend">Вывести на экран:</span>
-          <Checkbox onChange={handleCheckDoneTodos} checked={checkDoneTodos} label="Выполненные" style="forFilter" />
-          <Checkbox onChange={handleCheckNotDoneTodos} checked={checkNotDoneTodos} label="Не выполненные" style="forFilter" />
+          <Checkbox onChange={handleCheckDoneTodos} checked={checkDoneTodos} label="Выполненные" type="forFilter" />
+          <Checkbox onChange={handleCheckNotDoneTodos} checked={checkNotDoneTodos} label="Не выполненные" type="forFilter" />
         </div>
       </form>
       <form
