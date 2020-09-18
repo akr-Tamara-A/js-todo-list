@@ -1,28 +1,25 @@
+***
 
+# Список дел
+Здесь можно составить свой личный список дел.
 
+***
 
+## Описание проекта. </br>
+Дле ознакомления доступен готовый список из 7 дел. Можно добавлять новые дела, копировать старые, а так же редактировать и удалять невыполенные дела. </br>
+Можно отобразить список только выполненных или невыполненных дел. </br>
+Для доступности сайта добавлены состояния фокуса и ховера элементам, и подсказки кнопкам и чекбоксам. </br>
+Сервис создан с помощью библиотеки React.  </br>
 
-## Available Scripts
+***
 
-In the project directory, you can run:
+## Доступные скрипты.
+Находясь в папке проекта можно использовать:
 
-### `npm start`
+### `npm start` или `yarn start`
+Запускает сайт в режиме разработчика.<br />
+Доступно по адресу [http://localhost:3000](http://localhost:3000) для просмотра в браузере.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### `npm run build` или `yarn build`
+Собирает готовый проект в папку `build`.<br />
+***
