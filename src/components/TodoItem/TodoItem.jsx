@@ -25,7 +25,7 @@ export default function TodoItem(props) {
 
   return (
     <li className="todo" id={props.id}>
-      <Checkbox onChange={handleCheckbox} checked={isChecked} hasLabel={false} type="forTodo"/>
+      <Checkbox onChange={handleCheckbox} checked={isChecked} hasLabel={false} type="forTodo" title="Отметить выполненое" />
       <p
         className={`todo__text ${
           props.isChecked ? "todo__text_type_checked" : null
@@ -37,6 +37,7 @@ export default function TodoItem(props) {
         className="todo__btn todo__btn_type_edit"
         onClick={handleTodoEdit}
         disabled={isChecked}
+        title="Редактировать"
       >
         <svg
           width="24"
@@ -58,6 +59,7 @@ export default function TodoItem(props) {
       <Button
         className="todo__btn todo__btn_type_duplicate"
         onClick={handleTodoDublicate}
+        title="Дублировать"
       >
         <svg
           width="25"
@@ -80,6 +82,7 @@ export default function TodoItem(props) {
         className="todo__btn todo__btn_type_delete"
         onClick={handleTodoDelete}
         disabled={isChecked}
+        title="Удалить"
       >
         <svg
           width="18"

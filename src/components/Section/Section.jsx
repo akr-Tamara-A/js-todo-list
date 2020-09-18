@@ -105,7 +105,6 @@ export default function Section() {
 
   /** Фильтрация списка todo в зависимости от выбранных чекбоксов */
   function filterTodos() {
-    console.log(checkDoneTodos + ' ' + checkNotDoneTodos);
     let newTodos = [];
     if (checkDoneTodos && checkNotDoneTodos) {
       for (let todo of todos) {
@@ -134,8 +133,8 @@ export default function Section() {
       <form className="todos__form">
         <div className="todos__fieldset">
         <span className="todos__legend">Вывести на экран:</span>
-          <Checkbox onChange={handleCheckDoneTodos} checked={checkDoneTodos} label="Выполненные" type="forFilter" />
           <Checkbox onChange={handleCheckNotDoneTodos} checked={checkNotDoneTodos} label="Не выполненные" type="forFilter" />
+          <Checkbox onChange={handleCheckDoneTodos} checked={checkDoneTodos} label="Выполненные" type="forFilter" />
         </div>
       </form>
       <form

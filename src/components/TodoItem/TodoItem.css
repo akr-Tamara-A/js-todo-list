@@ -25,6 +25,5 @@
 
 .todo__text_type_checked {
   text-decoration: line-through;
-  color: rgba(250, 250, 250, .5);
 }
 

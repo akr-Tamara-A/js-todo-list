@@ -3,7 +3,7 @@ import "./Checkbox.css";
 
 export default function Checkbox(props) {
   return (
-    <label className={`todos__label ${props.label ? 'todos__label_left' : 'todos__label_right'}`}>
+    <label className={`todos__label ${props.label ? 'todos__label_left' : 'todos__label_right'}`} title={props.title}>
       {props.label}
       <input
         type="checkbox"
