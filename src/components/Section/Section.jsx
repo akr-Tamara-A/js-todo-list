@@ -8,7 +8,7 @@ import Checkbox from "../Checkbox/Checkbox.jsx";
 import {todos as todosList} from "../../utils/todos";
 
 /** Компонет "Секция" */
-export default function Section() {
+export default function Section(props) {
   const [todos, setTodos] = React.useState(todosList);
   const [todosForRender, setTodosForRender] = React.useState(todos);
   const [inputValue, setInputValue] = React.useState('');
@@ -21,6 +21,13 @@ export default function Section() {
   React.useEffect(() => {
     filterTodos();
   }, [todos, checkDoneTodos, checkNotDoneTodos]);
+
+
+  React.useEffect(() => {
+    if (props.fromConfirm.booleen) {
+      handleCheckOfTodo(props.fromConfirm.booleen, props.fromConfirm.id, props.fromConfirm.text);
+    }
+  }, [props.fromConfirm])
 
   /** Получение значение инпута */
   function handleInputChange(event) {
@@ -80,8 +87,17 @@ export default function Section() {
     setTodos(newTodos);
   };
 
-  /**  */
+  /** Обработка чека в todo */
   function handleCheckbox(booleen, id, text) {
+    if (booleen) {
+      props.toConfirm(booleen, id, text);
+    } else {
+      handleCheckOfTodo(booleen, id, text);
+    }
+  };
+  
+   /** Передача в список todos результата чекбокса */
+  function handleCheckOfTodo(booleen, id, text) {
     let newTodos = [];
     for (let todo of todos) {
       if (todo.id !== id) {
@@ -133,8 +149,16 @@ export default function Section() {
       <form className="todos__form">
         <div className="todos__fieldset">
         <span className="todos__legend">Вывести на экран:</span>
-          <Checkbox onChange={handleCheckNotDoneTodos} checked={checkNotDoneTodos} label="Не выполненные" type="forFilter" />
-          <Checkbox onChange={handleCheckDoneTodos} checked={checkDoneTodos} label="Выполненные" type="forFilter" />
+          <Checkbox 
+            onChange={handleCheckNotDoneTodos} 
+            checked={checkNotDoneTodos} 
+            label="Не выполненные" 
+            type="forFilter" />
+          <Checkbox 
+            onChange={handleCheckDoneTodos} 
+            checked={checkDoneTodos} 
+            label="Выполненные" 
+            type="forFilter" />
         </div>
       </form>
       <form
@@ -147,7 +171,10 @@ export default function Section() {
           onChange={handleInputChange}
           value={inputValue}
         />
-        <Button className="todos__submit-btn" text={buttonValue} />
+        <Button 
+          className="button_type_submit button_style_success" 
+          text={buttonValue} 
+          type="submit" />
       </form>
       <TodoList>
         {

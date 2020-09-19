@@ -6,6 +6,11 @@ import Checkbox from "../Checkbox/Checkbox.jsx";
 export default function TodoItem(props) {
   const [isChecked, setIsChecked] = React.useState(props.isChecked);
 
+  React.useEffect(() => {
+    //console.log(props.isChecked);
+    setIsChecked(props.isChecked);
+  }, [props.isChecked, setIsChecked]);
+
   function handleTodoEdit() {
     props.handleTodoEdit(props.text, props.id);
   }
@@ -19,7 +24,6 @@ export default function TodoItem(props) {
   }
 
   function handleCheckbox() {
-    setIsChecked(!isChecked);
     props.handleCheckbox(!isChecked, props.id, props.text);
   }
 
@@ -34,10 +38,11 @@ export default function TodoItem(props) {
         {props.text}
       </p>
       <Button
-        className="todo__btn todo__btn_type_edit"
+        className="button_type_icon todo__btn_type_edit"
         onClick={handleTodoEdit}
         disabled={isChecked}
         title="Редактировать"
+        type="button"
       >
         <svg
           width="24"
@@ -57,9 +62,10 @@ export default function TodoItem(props) {
         </svg>
       </Button>
       <Button
-        className="todo__btn todo__btn_type_duplicate"
+        className="button_type_icon todo__btn_type_duplicate"
         onClick={handleTodoDublicate}
         title="Дублировать"
+        type="button"
       >
         <svg
           width="25"
@@ -79,10 +85,11 @@ export default function TodoItem(props) {
         </svg>
       </Button>
       <Button
-        className="todo__btn todo__btn_type_delete"
+        className="button_type_icon todo__btn_type_delete"
         onClick={handleTodoDelete}
         disabled={isChecked}
         title="Удалить"
+        type="button"
       >
         <svg
           width="18"
