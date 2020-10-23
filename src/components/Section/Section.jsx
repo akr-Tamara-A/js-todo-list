@@ -1,29 +1,36 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import "./Section.css";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 import TodoList from "../TodoList/TodoList";
 import TodoItem from "../TodoItem/TodoItem";
 import Checkbox from "../Checkbox/Checkbox.jsx";
-import {todos as todosList} from "../../utils/todos";
+
 
 /** Компонет "Секция" */
 export default function Section(props) {
-  const [todos, setTodos] = React.useState(todosList);
-  const [todosForRender, setTodosForRender] = React.useState(todos);
-  const [inputValue, setInputValue] = React.useState('');
-  const [buttonValue, setButtonValue] = React.useState('Добавить');
-  const [selectedTodoId, setSelectedTodoId] = React.useState('');
-  const [checkDoneTodos, setCheckDoneTodos] = React.useState(true);
-  const [checkNotDoneTodos, setCheckNotDoneTodos] = React.useState(true);
+  const [todos, setTodos] = useState([]);
+  const [todosForRender, setTodosForRender] = useState(todos);
+  const [inputValue, setInputValue] = useState('');
+  const [buttonValue, setButtonValue] = useState('Добавить');
+  const [selectedTodoId, setSelectedTodoId] = useState('');
+  const [checkDoneTodos, setCheckDoneTodos] = useState(true);
+  const [checkNotDoneTodos, setCheckNotDoneTodos] = useState(true);
+
+  useEffect(() => {
+    if(localStorage.getItem('todos')) {
+      setTodos(JSON.parse(localStorage.getItem('todos')));
+    }
+  }, [])
 
   /** Проверка перерендеринга */
-  React.useEffect(() => {
+  useEffect(() => {
     filterTodos();
   }, [todos, checkDoneTodos, checkNotDoneTodos]);
 
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (props.fromConfirm.booleen) {
       handleCheckOfTodo(props.fromConfirm.booleen, props.fromConfirm.id, props.fromConfirm.text);
     }
@@ -39,6 +46,7 @@ export default function Section(props) {
     if (buttonValue === 'Добавить') {
       setTodos([{id: Date.now(), text: inputValue, isChecked: false}, ...todos]);
       clearForm();
+      localStorage.setItem('todos', JSON.stringify(todos));
       event.preventDefault();
     } else if (buttonValue === 'Сохранить') {
       let newTodos = [];
@@ -50,6 +58,7 @@ export default function Section(props) {
         }
       };
       setTodos(newTodos);
+      localStorage.setItem('todos', JSON.stringify(todos));
       clearForm();
       event.preventDefault();
     }
@@ -72,6 +81,7 @@ export default function Section(props) {
   function handleTodoDublicate(text) {
     setTodos([{id: Date.now(), text: text, isChecked: false}, ...todos]);
     clearForm();
+    localStorage.setItem('todos', JSON.stringify(todos));
     setCheckNotDoneTodos(true);
   }
   
@@ -85,6 +95,7 @@ export default function Section(props) {
       };
     };
     setTodos(newTodos);
+    localStorage.setItem('todos', JSON.stringify(todos));
   };
 
   /** Обработка чека в todo */
@@ -107,6 +118,7 @@ export default function Section(props) {
       }
     };
     setTodos(newTodos);
+    localStorage.setItem('todos', JSON.stringify(todos));
   };
 
   /** Обработка чека выполненных todo */
@@ -140,6 +152,7 @@ export default function Section(props) {
       };
     }
     setTodosForRender(newTodos);
+    localStorage.setItem('todos', JSON.stringify(todos));
   }
 
 
@@ -148,17 +161,19 @@ export default function Section(props) {
     <section className="todos">
       <form className="todos__form">
         <div className="todos__fieldset">
-        <span className="todos__legend">Вывести на экран:</span>
-          <Checkbox 
-            onChange={handleCheckNotDoneTodos} 
-            checked={checkNotDoneTodos} 
-            label="Не выполненные" 
-            type="forFilter" />
-          <Checkbox 
-            onChange={handleCheckDoneTodos} 
-            checked={checkDoneTodos} 
-            label="Выполненные" 
-            type="forFilter" />
+          <span className="todos__legend">Вывести на экран:</span>
+          <Checkbox
+            onChange={handleCheckNotDoneTodos}
+            checked={checkNotDoneTodos}
+            label="Не выполненные"
+            type="forFilter"
+          />
+          <Checkbox
+            onChange={handleCheckDoneTodos}
+            checked={checkDoneTodos}
+            label="Выполненные"
+            type="forFilter"
+          />
         </div>
       </form>
       <form
@@ -171,28 +186,30 @@ export default function Section(props) {
           onChange={handleInputChange}
           value={inputValue}
         />
-        <Button 
-          className="button_type_submit button_style_success" 
-          text={buttonValue} 
-          type="submit" />
+        <Button
+          className="button_type_submit button_style_success"
+          text={buttonValue}
+          type="submit"
+        />
       </form>
-      <TodoList>
-        {
-        todosForRender.map((todo) => {
-          return (
-            <TodoItem
-              key={todo.id}
-              text={todo.text}
-              id={todo.id}
-              isChecked={todo.isChecked}
-              handleCheckbox={handleCheckbox}
-              handleTodoEdit={handleTodoEdit}
-              handleTodoDublicate={handleTodoDublicate}
-              handleTodoDelete={handleTodoDelete}
-            />
-          );
-        })}
-      </TodoList>
+
+        <TodoList>
+          {todosForRender.map((todo) => {
+            return (
+              <TodoItem
+                key={todo.id}
+                text={todo.text}
+                id={todo.id}
+                isChecked={todo.isChecked}
+                handleCheckbox={handleCheckbox}
+                handleTodoEdit={handleTodoEdit}
+                handleTodoDublicate={handleTodoDublicate}
+                handleTodoDelete={handleTodoDelete}
+              />
+            );
+          })}
+        </TodoList>
+
     </section>
   );
 }
