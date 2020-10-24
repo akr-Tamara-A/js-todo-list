@@ -6,12 +6,12 @@
   border: 1px solid #6F6F6F;
   box-sizing: border-box;
   border-radius: 5px;
+  position: relative;
 }
 
 .todo:last-child {
   margin-bottom: 0;
 }
-
 
 .todo__text {
   position: relative;
@@ -27,3 +27,11 @@
   text-decoration: line-through;
 }
 
+.todo__date {
+  position: absolute;
+  top: 5px;
+  left: 85px;
+  color: rgba(250, 250, 250, .5);
+  font-size: 12px;
+  font-style: italic;
+}

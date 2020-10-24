@@ -37,6 +37,7 @@ export default function TodoItem(props) {
       >
         {props.text}
       </p>
+      <p className="todo__date">{props.date}</p>
       <Button
         className="button_type_icon todo__btn_type_edit"
         onClick={handleTodoEdit}

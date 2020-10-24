@@ -6,6 +6,7 @@ import Button from "../Button/Button";
 import TodoList from "../TodoList/TodoList";
 import TodoItem from "../TodoItem/TodoItem";
 import Checkbox from "../Checkbox/Checkbox.jsx";
+import { formatTime } from "../../utils/utils";
 
 
 /** Компонет "Секция" */
@@ -44,7 +45,8 @@ export default function Section(props) {
   /** Обработка сабмита формы */
   function handleFormSubmit(event) {
     if (buttonValue === 'Добавить') {
-      setTodos([{id: Date.now(), text: inputValue, isChecked: false}, ...todos]);
+      console.log(new Date())
+      setTodos([{id: Date.now(), text: inputValue, isChecked: false, date: formatTime(new Date())}, ...todos]);
       clearForm();
       localStorage.setItem('todos', JSON.stringify(todos));
       event.preventDefault();
@@ -54,7 +56,9 @@ export default function Section(props) {
         if (todo.id !== selectedTodoId) {
           newTodos.push(todo);
         } else {
-          newTodos.push({id: selectedTodoId, text: inputValue, isChecked: false});
+          console.log(todo);
+          console.log(todo.date);
+          newTodos.push({id: selectedTodoId, text: inputValue, isChecked: false, date: todo.date});
         }
       };
       setTodos(newTodos);
@@ -79,7 +83,7 @@ export default function Section(props) {
 
   /** Обработка копирования todo */
   function handleTodoDublicate(text) {
-    setTodos([{id: Date.now(), text: text, isChecked: false}, ...todos]);
+    setTodos([{id: Date.now(), text: text, isChecked: false, date: formatTime(new Date())}, ...todos]);
     clearForm();
     localStorage.setItem('todos', JSON.stringify(todos));
     setCheckNotDoneTodos(true);
@@ -114,7 +118,7 @@ export default function Section(props) {
       if (todo.id !== id) {
         newTodos.push(todo);
       } else {
-        newTodos.push({id: id, text: text, isChecked: booleen});
+        newTodos.push({id: id, text: text, isChecked: booleen, date: todo.date});
       }
     };
     setTodos(newTodos);
@@ -199,6 +203,7 @@ export default function Section(props) {
               <TodoItem
                 key={todo.id}
                 text={todo.text}
+                date={todo.date}
                 id={todo.id}
                 isChecked={todo.isChecked}
                 handleCheckbox={handleCheckbox}
